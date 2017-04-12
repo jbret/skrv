@@ -5,10 +5,16 @@
 #include <unistd.h>
 
 /*
- * Completed: chp 2 step 15
+ * Completed: chp 2 step 17
  */
 
 struct termios orig_termios;
+
+/* error handling */
+void die(const char *s) {
+  perror(s);   /* from stdio  */
+  exit(1);     /* from stdlib */
+}
 
 void disableRawMode() {
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
@@ -23,6 +29,8 @@ void enableRawMode() {
   raw.c_oflag &= ~(OPOST);
   raw.c_cflag |= (CS8);
   raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+  raw.c_cc[VMIN] = 0;   /* for read() timeout, vmin from termios */
+  raw.c_cc[VTIME] = 1;  /* for read() timeout, vtime from termios, in tenths of a second */
 
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
@@ -30,13 +38,15 @@ void enableRawMode() {
 int main() {
   enableRawMode();
 
-  char c;
-  while(read(STDIN_FILENO, &c, 1) == 1 && c != 'q') {
+  while(1) {
+    char c = '\0';
+    read(STDIN_FILENO, &c, 1);
     if (iscntrl(c)) {
       printf("%d\r\n", c);
     } else {
       printf("%d ('%c')\r\n", c, c);
     }
+    if (c == 'q') break;
   }
 
   return 0;
