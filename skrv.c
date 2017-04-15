@@ -7,9 +7,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/*
- * Completed: chp 3 step 21
- */
+/* c3 s21 */
 
 /*** defines ***/
 
