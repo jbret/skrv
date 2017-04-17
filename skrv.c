@@ -7,7 +7,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/* c3 s21 */
+/* c3 s23 */
 
 /*** defines ***/
 
@@ -54,6 +54,13 @@ char editorReadKey() {
   return c;
 }
 
+/*** output ***/
+
+void editorRefreshScreen() {
+  write(STDOUT_FILENO, "\x1b[2J", 4); /* escape sequence, write 4 bytes to terminal */
+  write(STDOUT_FILENO, "\x1b[H", 3); /* reposition cursor */
+}
+
 /*** input ***/
 
 void editorProcessKeypress() {
@@ -71,6 +78,7 @@ int main() {
   enableRawMode();
 
   while(1) {
+    editorRefreshScreen();
     editorProcessKeypress();
   }
 
