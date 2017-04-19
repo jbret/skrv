@@ -59,9 +59,20 @@ char editorReadKey() {
 
 /*** output ***/
 
+void editorDrawRows() {
+  int y;
+  for (y = 0; y < 24; ++y) {
+    write(STDOUT_FILENO, "~\r\n", 3);
+  }
+}
+
 void editorRefreshScreen() {
   write(STDOUT_FILENO, "\x1b[2J", 4); /* escape sequence, write 4 bytes to terminal */
   write(STDOUT_FILENO, "\x1b[H", 3); /* reposition cursor */
+
+  editorDrawRows();
+
+  write(STDOUT_FILENO, "\x1b[H", 3);
 }
 
 /*** input ***/
