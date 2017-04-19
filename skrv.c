@@ -7,7 +7,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/* c3 s23 */
+/* c3 s25 */
 
 /*** defines ***/
 
