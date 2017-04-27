@@ -17,6 +17,8 @@
 /*** data ***/
 
 struct editorConfig {
+  int screenrows;
+  int screencols;
   struct termios orig_termios;
 };
 
@@ -107,8 +109,13 @@ void editorProcessKeypress() {
 
 /*** init ***/
 
+void initEditor() {
+  if(getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
+}
+
 int main() {
   enableRawMode();
+  initEditor();
 
   while(1) {
     editorRefreshScreen();
