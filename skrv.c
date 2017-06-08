@@ -8,7 +8,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/* c3 s35 */
+/* c3 s36 */
 
 /*** defines ***/
 
@@ -95,6 +95,15 @@ int getWindowSize(int *rows, int *cols) {
     return 0;
   }
 }
+
+/*** append buffer ***/
+
+struct abuf {
+  char *b;
+  int len;
+};
+
+#define ABUF_INIT {NULL, 0}
 
 /*** output ***/
 
