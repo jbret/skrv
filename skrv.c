@@ -9,7 +9,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-/* c3 s42 */
+/* c3 s43 */
 
 /*** defines ***/
 
